@@ -1,0 +1,7 @@
+E:\Programming\Libaries\C#\Mc\Mc\bin\Debug\Mc.exe.config
+E:\Programming\Libaries\C#\Mc\Mc\bin\Debug\Mc.exe
+E:\Programming\Libaries\C#\Mc\Mc\bin\Debug\Mc.pdb
+E:\Programming\Libaries\C#\Mc\Mc\obj\Debug\Mc.csproj.AssemblyReference.cache
+E:\Programming\Libaries\C#\Mc\Mc\obj\Debug\Mc.csproj.CoreCompileInputs.cache
+E:\Programming\Libaries\C#\Mc\Mc\obj\Debug\Mc.exe
+E:\Programming\Libaries\C#\Mc\Mc\obj\Debug\Mc.pdb
