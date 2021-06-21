@@ -104,6 +104,7 @@ namespace Mc
             return Left;
         }
 
+        // ( and )
         private ExpressionSyntax ParsePrimaryExpression()
         {
             if(Current.Kind == SyntaxKind.OpenParenthesisToken)
