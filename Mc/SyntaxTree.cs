@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mc
 {
-    sealed class SyntaxTree
+    public sealed class SyntaxTree
     {
 
         public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)

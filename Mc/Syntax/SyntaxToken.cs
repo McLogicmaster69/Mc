@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mc.Syntax
 {
-    class SyntaxToken : SyntaxNode
+    public sealed class SyntaxToken : SyntaxNode
     {
 
         public SyntaxToken(SyntaxKind kind, int position, string text)
@@ -36,7 +36,7 @@ namespace Mc.Syntax
         }
     }
 
-    enum SyntaxKind
+    public enum SyntaxKind
     {
         NumberToken,
         WhiteSpaceToken,

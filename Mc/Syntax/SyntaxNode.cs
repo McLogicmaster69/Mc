@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Mc.Syntax
 {
     //Node for syntax
-    abstract class SyntaxNode
+    public abstract class SyntaxNode
     {
         public abstract SyntaxKind Kind { get; }
 

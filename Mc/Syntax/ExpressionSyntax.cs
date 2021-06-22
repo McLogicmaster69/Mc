@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mc.Syntax
 {
-    abstract class ExpressionSyntax : SyntaxNode
+    public abstract class ExpressionSyntax : SyntaxNode
     {
     }
 }

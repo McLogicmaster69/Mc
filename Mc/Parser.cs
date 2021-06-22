@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mc
 {
-    class Parser
+    internal sealed class Parser
     {
         private readonly SyntaxToken[] Tokens;
         private List<string> diagnostics = new List<string>();

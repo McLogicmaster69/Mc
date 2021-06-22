@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mc
 {
-    class Lexer
+    internal sealed class Lexer
     {
         private readonly string Text;
         private int Position;

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Mc
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             bool ShowTree = false;
             while (true)
@@ -18,7 +18,7 @@ namespace Mc
                 Console.Write("Mc: > ");
                 string Line = Console.ReadLine();
                 if (String.IsNullOrEmpty(Line))
-                    return;
+                    continue;
                 if(Line == "#ShowTree")
                 {
                     ShowTree = !ShowTree;
@@ -29,6 +29,10 @@ namespace Mc
                 {
                     Console.Clear();
                     continue;
+                }
+                else if(Line == "#End")
+                {
+                    return;
                 }
 
                 SyntaxTree syntaxTree = SyntaxTree.Parse(Line);

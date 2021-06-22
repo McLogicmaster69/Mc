@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mc.Syntax
 {
-    sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
+    public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
         public ParenthesizedExpressionSyntax(SyntaxToken openToken, ExpressionSyntax expression, SyntaxToken closeToken)
         {

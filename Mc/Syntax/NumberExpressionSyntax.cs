@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mc.Syntax
 {
-    sealed class NumberExpressionSyntax : ExpressionSyntax
+    public sealed class NumberExpressionSyntax : ExpressionSyntax
     {
         public NumberExpressionSyntax(SyntaxToken numberToken)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mc
 {
-    class Evaluator
+    public sealed class Evaluator
     {
         private readonly ExpressionSyntax Root;
 
