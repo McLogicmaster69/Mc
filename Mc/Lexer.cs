@@ -71,18 +71,21 @@ namespace Mc
             }
 
             //Check for symbols
-            if (Current == '+')
-                return new SyntaxToken(SyntaxKind.PlusToken, Position++, "+");
-            if (Current == '-')
-                return new SyntaxToken(SyntaxKind.MinusToken, Position++, "-");
-            if (Current == '*')
-                return new SyntaxToken(SyntaxKind.StarToken, Position++, "*");
-            if (Current == '/')
-                return new SyntaxToken(SyntaxKind.SlashToken, Position++, "/");
-            if (Current == '(')
-                return new SyntaxToken(SyntaxKind.OpenParenthesisToken, Position++, "*");
-            if (Current == ')')
-                return new SyntaxToken(SyntaxKind.CloseParenthesisToken, Position++, "/");
+            switch (Current)
+            {
+                case '+':
+                    return new SyntaxToken(SyntaxKind.PlusToken, Position++, "+");
+                case '-':
+                    return new SyntaxToken(SyntaxKind.MinusToken, Position++, "-");
+                case '*':
+                    return new SyntaxToken(SyntaxKind.StarToken, Position++, "*");
+                case '/':
+                    return new SyntaxToken(SyntaxKind.SlashToken, Position++, "/");
+                case '(':
+                    return new SyntaxToken(SyntaxKind.OpenParenthesisToken, Position++, "*");
+                case ')':
+                    return new SyntaxToken(SyntaxKind.CloseParenthesisToken, Position++, "/");
+            }
 
             //ERROR
             diagnostics.Add($"ERROR: bad character input: '{Current}'");

@@ -73,35 +73,33 @@ namespace Mc
             return new SyntaxTree(Diagnostics, expression, EndOfFileToken);
         }
 
-        private ExpressionSyntax ParseExpression()
+        private ExpressionSyntax ParseExpression(int ParentPrecedence = 0)
         {
-            return ParseTerm();
-        }
-
-        // + and -
-        private ExpressionSyntax ParseTerm()
-        {
-            ExpressionSyntax Left = ParseFactor();
-            while (Current.Kind == SyntaxKind.PlusToken || Current.Kind == SyntaxKind.MinusToken)
+            ExpressionSyntax left;
+            int UnaryOP = Current.Kind.GetBinaryOperatorPrecedence();
+            if(UnaryOP != 0 && UnaryOP >= ParentPrecedence)
             {
-                SyntaxToken OperatorToken = NextToken();
-                ExpressionSyntax Right = ParseFactor();
-                Left = new BinaryExpressionSyntax(Left, OperatorToken, Right);
+                SyntaxToken OT = NextToken();
+                ExpressionSyntax operand = ParseExpression(UnaryOP);
+                left = new UnaryExpressionSyntax(OT, operand);
             }
-            return Left;
-        }
-
-        // * and /
-        private ExpressionSyntax ParseFactor()
-        {
-            ExpressionSyntax Left = ParsePrimaryExpression();
-            while (Current.Kind == SyntaxKind.StarToken || Current.Kind == SyntaxKind.SlashToken)
+            else
             {
-                SyntaxToken OperatorToken = NextToken();
-                ExpressionSyntax Right = ParsePrimaryExpression();
-                Left = new BinaryExpressionSyntax(Left, OperatorToken, Right);
+                left = ParsePrimaryExpression();
             }
-            return Left;
+
+            while (true)
+            {
+                int Precedence = Current.Kind.GetBinaryOperatorPrecedence();
+                if (Precedence == 0 || Precedence <= ParentPrecedence)
+                    break;
+
+                SyntaxToken OperatorToken = NextToken();
+                ExpressionSyntax right = ParseExpression(Precedence);
+                left = new BinaryExpressionSyntax(left, OperatorToken, right);
+            }
+
+            return left;
         }
 
         // ( and )

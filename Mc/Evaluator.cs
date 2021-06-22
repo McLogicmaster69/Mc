@@ -25,6 +25,19 @@ namespace Mc
         {
             if (node is LiteralExpressionSyntax n)
                 return (int) n.LiteralToken.Value;
+            if(node is UnaryExpressionSyntax u)
+            {
+                int operand = EvaluateExpression(u.Operand);
+                switch (u.OperatorToken.Kind)
+                {
+                    case SyntaxKind.PlusToken:
+                        return operand;
+                    case SyntaxKind.MinusToken:
+                        return -operand;
+                    default:
+                        throw new Exception($"Unexpected binary operator {u.OperatorToken.Kind}");
+                }
+            }
             if(node is BinaryExpressionSyntax b)
             {
                 int left = EvaluateExpression(b.Left);
