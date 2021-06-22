@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mc
+namespace Mc.Syntax
 {
     public sealed class SyntaxTree
     {

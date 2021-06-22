@@ -44,8 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Evaluator.cs" />
+    <Compile Include="McInfo.cs" />
     <Compile Include="Syntax\ParenthesizedExpressionSyntax.cs" />
-    <Compile Include="SyntaxTree.cs" />
+    <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="Syntax\ExpressionSyntax.cs" />
     <Compile Include="Lexer.cs" />

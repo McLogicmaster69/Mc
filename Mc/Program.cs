@@ -1,4 +1,5 @@
-﻿using Mc.Syntax;
+﻿using Mc.Main;
+using Mc.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,13 @@ namespace Mc
                 else if(Line == "#End")
                 {
                     return;
+                }
+                else if(Line == "#Mc")
+                {
+                    Console.WriteLine("Mc PROGRAMMING LANGUAGE");
+                    Console.WriteLine("Built using C#");
+                    Console.WriteLine($"Current Version: {McInfo.Version}");
+                    continue;
                 }
 
                 SyntaxTree syntaxTree = SyntaxTree.Parse(Line);
