@@ -54,7 +54,7 @@ namespace Mc
             return current;
         }
 
-        private SyntaxToken Match(SyntaxKind kind)
+        private SyntaxToken MatchToken(SyntaxKind kind)
         {
             if(Current.Kind == kind)
                 return NextToken();
@@ -65,17 +65,17 @@ namespace Mc
 
         }
 
-        private ExpressionSyntax ParseExpression()
-        {
-            return ParseTerm();
-        }
-
         //Begin Parse
         public SyntaxTree Parse()
         {
-            ExpressionSyntax expression = ParseTerm();
-            SyntaxToken EndOfFileToken = Match(SyntaxKind.EndOfFileToken);
+            ExpressionSyntax expression = ParseExpression();
+            SyntaxToken EndOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
             return new SyntaxTree(Diagnostics, expression, EndOfFileToken);
+        }
+
+        private ExpressionSyntax ParseExpression()
+        {
+            return ParseTerm();
         }
 
         // + and -
@@ -111,12 +111,12 @@ namespace Mc
             {
                 SyntaxToken left = NextToken();
                 ExpressionSyntax expression = ParseExpression();
-                SyntaxToken right = Match(SyntaxKind.CloseParenthesisToken);
+                SyntaxToken right = MatchToken(SyntaxKind.CloseParenthesisToken);
                 return new ParenthesizedExpressionSyntax(left, expression, right);
             }
 
-            SyntaxToken NumberToken = Match(SyntaxKind.NumberToken);
-            return new NumberExpressionSyntax(NumberToken);
+            SyntaxToken NumberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(NumberToken);
         }
     }
 }
