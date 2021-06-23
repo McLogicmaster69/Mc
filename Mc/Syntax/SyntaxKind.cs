@@ -26,7 +26,14 @@ namespace Mc.Syntax
         LiteralExpression,
         BinaryExpression,
         UnaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
 
+        TrueKeyword,
+        FalseKeyword,
+        IdentifierToken,
+
+        BangToken,
+        AmpersandAmpersandToken,
+        PipePipeToken
     }
 }

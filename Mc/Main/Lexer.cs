@@ -20,14 +20,15 @@ namespace Mc.Main
 
         public IEnumerable<string> Diagnostics => diagnostics;
 
-        private char Current
+        private char Current => Peek(0);
+        private char LookAhead => Peek(1);
+
+        private char Peek(int offset)
         {
-            get
-            {
-                if(Position >= Text.Length)
-                    return '\0';
-                return Text[Position];
-            }
+            int index = Position + offset;
+            if (index >= Text.Length)
+                return '\0';
+            return Text[Position];
         }
 
         private void Next()
@@ -66,8 +67,19 @@ namespace Mc.Main
 
                 int length = Position - Start;
                 string text = Text.Substring(Start, length);
-                int.TryParse(text, out var value);
                 return new SyntaxToken(SyntaxKind.WhiteSpaceToken, Start, text);
+            }
+
+            if (char.IsLetter(Current))
+            {
+                int Start = Position;
+                while (char.IsLetter(Current))
+                    Next();
+
+                int length = Position - Start;
+                string text = Text.Substring(Start, length);
+                SyntaxKind kind = SyntaxFacts.GetKeywordKind(text);
+                return new SyntaxToken(kind, Start, text);
             }
 
             //Check for symbols
@@ -85,6 +97,16 @@ namespace Mc.Main
                     return new SyntaxToken(SyntaxKind.OpenParenthesisToken, Position++, "*");
                 case ')':
                     return new SyntaxToken(SyntaxKind.CloseParenthesisToken, Position++, "/");
+                case '!':
+                    return new SyntaxToken(SyntaxKind.BangToken, Position++, "!");
+                case '&':
+                    if (LookAhead == '&')
+                        return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, Position += 2, "&&");
+                    break;
+                case '|':
+                    if (LookAhead == '|')
+                        return new SyntaxToken(SyntaxKind.PipePipeToken, Position += 2, "||");
+                    break;
             }
 
             //ERROR

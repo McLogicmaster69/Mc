@@ -105,16 +105,32 @@ namespace Mc.Main
         // ( and )
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if(Current.Kind == SyntaxKind.OpenParenthesisToken)
+            switch (Current.Kind)
             {
-                SyntaxToken left = NextToken();
-                ExpressionSyntax expression = ParseExpression();
-                SyntaxToken right = MatchToken(SyntaxKind.CloseParenthesisToken);
-                return new ParenthesizedExpressionSyntax(left, expression, right);
-            }
+                case SyntaxKind.OpenParenthesisToken:
+                {
+                        SyntaxToken left = NextToken();
+                        ExpressionSyntax expression = ParseExpression();
+                        SyntaxToken right = MatchToken(SyntaxKind.CloseParenthesisToken);
+                        return new ParenthesizedExpressionSyntax(left, expression, right);
+                }
 
-            SyntaxToken NumberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(NumberToken);
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                {
+                        SyntaxToken KeywordToken = NextToken();
+                        bool value = KeywordToken.Kind == SyntaxKind.TrueKeyword;
+                        return new LiteralExpressionSyntax(KeywordToken, value);
+                }
+
+                default:
+                {
+
+                        SyntaxToken NumberToken = MatchToken(SyntaxKind.NumberToken);
+                        return new LiteralExpressionSyntax(NumberToken);
+
+                }
+            }
         }
     }
 }

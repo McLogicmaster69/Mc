@@ -47,7 +47,7 @@ namespace Mc
                 SyntaxTree syntaxTree = SyntaxTree.Parse(Line);
                 Binder binder = new Binder();
                 BoundExpression boundExpression = binder.BindExpression(syntaxTree.Root);
-                IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics;
+                IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (ShowTree)
                 {
@@ -60,7 +60,7 @@ namespace Mc
                 if (!diagnostics.Any())
                 {
                     Evaluator e = new Evaluator(boundExpression);
-                    int Result = e.Evaluate();
+                    var Result = e.Evaluate();
                     Console.WriteLine(Result);
                 }
                 else
