@@ -29,7 +29,7 @@ namespace Mc.Main
             if(node is BoundUnaryExpression u)
             {
                 object operand = EvaluateExpression(u.Operand);
-                switch (u.OperatorKind)
+                switch (u.Op.Kind)
                 {
                     case BoundUnaryOperatorKind.Identity:
                         return (int) operand;
@@ -38,7 +38,7 @@ namespace Mc.Main
                     case BoundUnaryOperatorKind.LogicalNegation:
                         return !(bool)operand;
                     default:
-                        throw new Exception($"Unexpected binary operator {u.OperatorKind}");
+                        throw new Exception($"Unexpected binary operator {u.Op}");
                 }
             }
             if(node is BoundBinaryExpression b)
@@ -46,7 +46,7 @@ namespace Mc.Main
                 object left = EvaluateExpression(b.Left);
                 object right = EvaluateExpression(b.Right);
 
-                switch (b.OperatorKind)
+                switch (b.Op.Kind)
                 {
                     case BoundBinaryOperatorKind.Addition:
                         return (int) left + (int)right;
@@ -60,8 +60,12 @@ namespace Mc.Main
                         return (bool) left && (bool) right;
                     case BoundBinaryOperatorKind.LogicalOr:
                         return (bool) left || (bool) right;
+                    case BoundBinaryOperatorKind.Equivalent:
+                        return Equals(left, right);
+                    case BoundBinaryOperatorKind.NotEquivalent:
+                        return !Equals(left, right);
                     default:
-                        throw new Exception($"Unexpected binary operator {b.OperatorKind}");
+                        throw new Exception($"Unexpected binary operator {b.Op}");
                 }
             }
 

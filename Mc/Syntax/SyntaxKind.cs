@@ -34,6 +34,9 @@ namespace Mc.Syntax
 
         BangToken,
         AmpersandAmpersandToken,
-        PipePipeToken
+        PipePipeToken,
+
+        EqualsEqualsToken,
+        BangEqualsToken
     }
 }

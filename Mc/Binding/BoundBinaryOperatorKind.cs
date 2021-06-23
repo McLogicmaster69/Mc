@@ -13,6 +13,8 @@ namespace Mc.Binding
         Multiplication,
         Division,
         LogicalAnd,
-        LogicalOr
+        LogicalOr,
+        Equivalent,
+        NotEquivalent
     }
 }

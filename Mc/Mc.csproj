@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Binding\Binder.cs" />
     <Compile Include="Binding\BoundBinaryExpression.cs" />
+    <Compile Include="Binding\BoundBinaryOperator.cs" />
+    <Compile Include="Binding\BoundUnaryOperator.cs" />
     <Compile Include="Binding\BoundBinaryOperatorKind.cs" />
     <Compile Include="Binding\BoundExpression.cs" />
     <Compile Include="Binding\BoundLiteralExpression.cs" />

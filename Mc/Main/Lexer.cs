@@ -98,7 +98,10 @@ namespace Mc.Main
                 case ')':
                     return new SyntaxToken(SyntaxKind.CloseParenthesisToken, Position++, "/");
                 case '!':
-                    return new SyntaxToken(SyntaxKind.BangToken, Position++, "!");
+                    if (LookAhead == '=')
+                        return new SyntaxToken(SyntaxKind.BangEqualsToken, Position += 2, "!=");
+                    else
+                        return new SyntaxToken(SyntaxKind.BangToken, Position++, "!");
                 case '&':
                     if (LookAhead == '&')
                         return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, Position += 2, "&&");
@@ -107,6 +110,11 @@ namespace Mc.Main
                     if (LookAhead == '|')
                         return new SyntaxToken(SyntaxKind.PipePipeToken, Position += 2, "||");
                     break;
+                case '=':
+                    if (LookAhead == '=')
+                        return new SyntaxToken(SyntaxKind.EqualsEqualsToken, Position += 2, "==");
+                    break;
+                    
             }
 
             //ERROR
