@@ -1,4 +1,5 @@
-﻿using Mc.Syntax;
+﻿using Mc.Binding;
+using Mc.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Mc.Main
 {
-    public sealed class Evaluator
+    internal sealed class Evaluator
     {
-        private readonly ExpressionSyntax Root;
+        private readonly BoundExpression Root;
 
-        public Evaluator(ExpressionSyntax root)
+        public Evaluator(BoundExpression root)
         {
             this.Root = root;
         }
@@ -21,42 +22,42 @@ namespace Mc.Main
             return EvaluateExpression(Root);
         }
 
-        private int EvaluateExpression(ExpressionSyntax node)
+        private int EvaluateExpression(BoundExpression node)
         {
-            if (node is LiteralExpressionSyntax n)
-                return (int) n.LiteralToken.Value;
-            if(node is UnaryExpressionSyntax u)
+            if (node is BoundLiteralExpression n)
+                return (int) n.Value;
+            if(node is BoundUnaryExpression u)
             {
                 int operand = EvaluateExpression(u.Operand);
-                switch (u.OperatorToken.Kind)
+                switch (u.OperatorKind)
                 {
-                    case SyntaxKind.PlusToken:
+                    case BoundUnaryOperatorKind.Identity:
                         return operand;
-                    case SyntaxKind.MinusToken:
+                    case BoundUnaryOperatorKind.Negation:
                         return -operand;
                     default:
-                        throw new Exception($"Unexpected binary operator {u.OperatorToken.Kind}");
+                        throw new Exception($"Unexpected binary operator {u.OperatorKind}");
                 }
             }
-            if(node is BinaryExpressionSyntax b)
+            if(node is BoundBinaryExpression b)
             {
                 int left = EvaluateExpression(b.Left);
                 int right = EvaluateExpression(b.Right);
 
-                if (b.OperatorToken.Kind == SyntaxKind.PlusToken)
-                    return left + right;
-                if (b.OperatorToken.Kind == SyntaxKind.MinusToken)
-                    return left - right;
-                if (b.OperatorToken.Kind == SyntaxKind.StarToken)
-                    return left * right;
-                if (b.OperatorToken.Kind == SyntaxKind.SlashToken)
-                    return left / right;
-                else
-                    throw new Exception($"Unexpected binary operator {b.OperatorToken.Kind}");
+                switch (b.OperatorKind)
+                {
+                    case BoundBinaryOperatorKind.Addition:
+                        return left + right;
+                    case BoundBinaryOperatorKind.Subtraction:
+                        return left - right;
+                    case BoundBinaryOperatorKind.Multiplication:
+                        return left * right;
+                    case BoundBinaryOperatorKind.Division:
+                        return left / right;
+                    default:
+                        throw new Exception($"Unexpected binary operator {b.OperatorKind}");
+                }
             }
-
-            if (node is ParenthesizedExpressionSyntax p)
-                return EvaluateExpression(p.Expression);
 
             throw new Exception($"Unexpected node {node.Kind}");
 

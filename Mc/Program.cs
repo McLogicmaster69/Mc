@@ -1,4 +1,5 @@
-﻿using Mc.Main;
+﻿using Mc.Binding;
+using Mc.Main;
 using Mc.Syntax;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ namespace Mc
                 }
 
                 SyntaxTree syntaxTree = SyntaxTree.Parse(Line);
+                Binder binder = new Binder();
+                BoundExpression boundExpression = binder.BindExpression(syntaxTree.Root);
+                IReadOnlyList<string> diagnostics = syntaxTree.Diagnostics;
 
                 if (ShowTree)
                 {
@@ -53,9 +57,9 @@ namespace Mc
                     Console.ForegroundColor = color;
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    Evaluator e = new Evaluator(syntaxTree.Root);
+                    Evaluator e = new Evaluator(boundExpression);
                     int Result = e.Evaluate();
                     Console.WriteLine(Result);
                 }
@@ -64,7 +68,7 @@ namespace Mc
                     var color = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.Red;
 
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
 
                     Console.ForegroundColor = color;

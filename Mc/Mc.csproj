@@ -43,15 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Evaluator.cs" />
+    <Compile Include="Binding\Binder.cs" />
+    <Compile Include="Binding\BoundBinaryExpression.cs" />
+    <Compile Include="Binding\BoundBinaryOperatorKind.cs" />
+    <Compile Include="Binding\BoundExpression.cs" />
+    <Compile Include="Binding\BoundLiteralExpression.cs" />
+    <Compile Include="Binding\BoundNode.cs" />
+    <Compile Include="Binding\BoundNodeKind.cs" />
+    <Compile Include="Binding\BoundUnaryExpression.cs" />
+    <Compile Include="Binding\BoundUnaryOperatorKind.cs" />
+    <Compile Include="Main\Evaluator.cs" />
     <Compile Include="McInfo.cs" />
     <Compile Include="Syntax\ParenthesizedExpressionSyntax.cs" />
     <Compile Include="Syntax\SyntaxTree.cs" />
     <Compile Include="Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="Syntax\ExpressionSyntax.cs" />
-    <Compile Include="Lexer.cs" />
+    <Compile Include="Main\Lexer.cs" />
     <Compile Include="Syntax\LiteralExpressionSyntax.cs" />
-    <Compile Include="Parser.cs" />
+    <Compile Include="Main\Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Syntax\SyntaxFacts.cs" />
@@ -63,5 +72,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
